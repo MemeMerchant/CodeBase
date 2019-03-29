@@ -1,8 +1,8 @@
 pragma solidity >=0.4.21 <0.6.0;
 
-import "openzeppelin-solidity/contracts/token/ERC20/ERC20.sol";
+import "/openzeppelin-solidity/contracts/token/ERC721/ERC721Enumerable.sol";
 
-contract TutorialToken is ERC20 {
+contract TutorialToken is ERC721Enumerable{
     string public name = "TutorialToken";
     string public symbol = "TT";
     uint public decimals = 2;
