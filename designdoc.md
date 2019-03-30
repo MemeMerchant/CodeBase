@@ -9,6 +9,20 @@ We agreed that we would utilize the battle tried Open-Zeppelin ERC721 & ERC721En
  ++ Auction Contracts
  ++ Meme Structures 
  ++ Legacy Meme Marketplace Bootstrapping 
+ ++ Distributed Meme Minting Procedures 
 
+## Front End Considerations 
+
+++ Fill in here 
+
+## uPort Design Considerations
  
+++ Fill in here 
 
+## IPFS Data Management Considerations 
+
+++ Fill in here
+ 
+## Contract Tree structure 
+
+++ Place tree here 
