@@ -25,4 +25,17 @@ We agreed that we would utilize the battle tried Open-Zeppelin ERC721 & ERC721En
  
 ## Contract Tree structure 
 
- + Place tree here 
+ + Place tree here
+
+## Merge Activity (Legacy code with Zeppelin)
+Once we got all of the code to compile together, it needed to be edited for funcionality. The main concern is matching the memory and storage elements between the Zeppelin contracts and the legacy contracts to ensure that we don't have gaps in our token management. In MemeBase.sol, the majority of the functions are going to be replaced by the Zeppelin code. The funcitons which were not commented out are:
+ 
+```solidity
+//Checks if the caller owns the inputed meme
+function _owns(address _calling, uint256 tokenId) 
+
+function _resetApproval(address _owner, uint256 tokenId)
+
+function createMeme(address _owner, address _creator, uint16 generation)
+```
+
