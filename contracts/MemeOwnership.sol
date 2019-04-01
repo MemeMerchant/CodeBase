@@ -25,7 +25,7 @@ contract MemeOwnership is MemeBase{
     return size > 0;
   }
 
-
+  /* USE ZEPPELIN CODE
   /// @dev Returns the number of memes that an address owns
   function balanceOf(address _owner) external view returns (uint256){
     return ownedMeme[_owner].length;
@@ -38,7 +38,7 @@ contract MemeOwnership is MemeBase{
 
     _resetApprovalAndTransfer(_to, _from, _tokenId);
   }
-
+*/
 
 /* I THINK WE SHOULD USE THE ZEPPELIN TRANSFER FUNCTIONS IN THEIR ENTIRITY THEY ARE LIKELY
    MORE EFFECIENT AND SECURE THAN OURS.... AND I CAN'T HONESTLY POINT TO A DIFFERENCE.
@@ -63,6 +63,7 @@ contract MemeOwnership is MemeBase{
 
   */
 
+/* Using Zeppelin Code
   function approve(address _approved, uint256 _tokenId) external payable {
     require(_owns(msg.sender, _tokenId));
     address owner = memeIdToOwner[_tokenId];
@@ -73,7 +74,7 @@ contract MemeOwnership is MemeBase{
       emit Approval(msg.sender, _approved, _tokenId);
     }
   }
-
+*/
 
   function supportsInterface(bytes4 interfaceID) external view returns (bool)
     {

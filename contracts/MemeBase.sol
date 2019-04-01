@@ -123,6 +123,7 @@ contract MemeBase is MemeAccessControl,ERC721Enumerable{
         emit Approval(_owner, address(0), _tokenId);
       }
 
+/* Using Zeppelin: Note that zeppelin doesn't have an array of an owner's tokens, they use a mapping
       // transfers the meme and resets approval so that the new owner can set approvals
       function _resetApprovalAndTransfer(address _to, address _from, uint256 _tokenId) internal{
         require(_to != address(0));
@@ -137,6 +138,7 @@ contract MemeBase is MemeAccessControl,ERC721Enumerable{
         _addToken(_to, _tokenId);
         emit Transfer(_from, _to, _tokenId);
       }
+  */
 
       function _removeToken(address _from,uint256 _tokenId) private {
         require(_owns(_from, _tokenId));
