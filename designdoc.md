@@ -42,4 +42,8 @@ function _resetApproval(address _owner, uint256 tokenId)
 /// use the memeId as the tokenId.
 function createMeme(address _owner, address _creator, uint16 generation)
 ```
+There were also several helper functions not commented out but that is only because they aren't called anywhere as the parent functions have been commented out. Its also true that the Zeppelin code has functions which perform the same as the `_resetApproval` and `_owns` functions. 
 
+`MemeOwnerhsip.sol` was also all but entirely commented out to be replaced by the Zeppeling code. Only the supportsInterface functions weren't commented out in these cases.
+
+All of the code from `MemeAuction.sol` -> `MemeCore.sol` remains the same aside from some edits to support the new solc compiler requirements. The focus needs to be on matching the existing memory management in these contracts with the new memory management that was replaced in `MemeBase.sol` and `MemeOwnership.sol` 
