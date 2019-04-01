@@ -36,6 +36,10 @@ function _owns(address _calling, uint256 tokenId)
 
 function _resetApproval(address _owner, uint256 tokenId)
 
+/// @dev Defines the new meme which has been created and adds it to the
+/// meme array. By doing so, we also create the unique memeId.  When the
+/// _transfer function is called to assign its initial ownership, we
+/// use the memeId as the tokenId.
 function createMeme(address _owner, address _creator, uint16 generation)
 ```
 
