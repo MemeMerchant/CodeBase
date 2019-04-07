@@ -46,4 +46,6 @@ There were also several helper functions not commented out but that is only beca
 
 `MemeOwnerhsip.sol` was also all but entirely commented out to be replaced by the Zeppeling code. Only the supportsInterface functions weren't commented out in these cases.
 
-All of the code from `MemeAuction.sol` -> `MemeCore.sol` remains the same aside from some edits to support the new solc compiler requirements. The focus needs to be on matching the existing memory management in these contracts with the new memory management that was replaced in `MemeBase.sol` and `MemeOwnership.sol` 
+All of the code from `MemeAuction.sol` -> `MemeCore.sol` remains the same aside from some edits to support the new solc compiler requirements. The focus needs to be on matching the existing memory management in these contracts with the new memory management that was replaced in `MemeBase.sol` and `MemeOwnership.sol`
+
+On top of the ERC721 management, we will need to provide the infrastructure that applies the meme data to the token itself and the managment of that information on the contract. The remainder of the management is of the contracts and the auctions.  
