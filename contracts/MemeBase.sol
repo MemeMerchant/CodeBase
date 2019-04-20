@@ -38,7 +38,21 @@ contract MemeBase is MemeAccessControl,ERC721Enumerable{
       /*********************************************/
       /*** Transfer Functions working w/ ERC721s ***/
       /*********************************************/
+      /// @dev Alerts system that a new meme has entered the ecosystem
+      /// @param memeId is the id of the meme, based of its index in the memes array
+      /// @param memeOwner is the address of the first owner of the new memes
+      /// in the initial implementation of the market the first owner will be the
+      /// contract since it will be part of the IMO (initial meme offering)
+      /// @param memeCreator allows for future lookups of an individual's meme creations
+      /// Until user upload is implemented memeCreator will always be the IMO contract(s)
+      /// and, in terms of the event, will be the same as the indexed memeOwner
+      event MemeCreated(uint memeId, address indexed memeOwner, address indexed memeCreator);
 
+      event Approval(address indexed _owner, address indexed _approved, uint256 _tokenId);
+
+      /// @dev This is the event which is compliant with the ERC721 standard. Alerts
+      /// the system to a transfer within the marketplace
+      event Transfer(address indexed _from, address indexed _to, uint256 _tokenId);
 
       /*********************************************/
       /** Add New Meme to the MemeMerchant System **/
@@ -54,7 +68,7 @@ contract MemeBase is MemeAccessControl,ERC721Enumerable{
           birthTime: uint64(now),
           generation: _generation
           });
-          
+
               /*
               NEED TO SET THESE FUNCTIONS TO THE ONES FROM Zeppelin
               COMPILATION ERRORS WILL POINT TO BROKEN points
@@ -69,7 +83,7 @@ contract MemeBase is MemeAccessControl,ERC721Enumerable{
 
           // call only _addToken because we don't need to reset approvals or
           // remove ownership from elsewhere since it doesn't have these yet
-          _addToken(_owner, _createdMemeId);
+          _mint(_owner, _createdMemeId);
           emit Transfer(address(0), _owner, _createdMemeId);
 
           return(_createdMemeId);

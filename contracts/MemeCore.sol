@@ -40,7 +40,7 @@ contract MemeCore is MemeMinting{
       uint64 birthTime
       ){
         Meme storage _meme = memes[_memeId];
-        owner = memeIdToOwner[_memeId];
+        owner = ownerOf(_memeId);
         creator = _meme.creator;
         generation = _meme.generation;
         birthTime = _meme.birthTime;

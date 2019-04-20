@@ -47,8 +47,8 @@ contract MemeAuction is MemeOwnership {
     public
     whenNotPaused()
   {
-      require(_owns(msg.sender, _memeId));
-      _approve(address(clockAuction), _memeId);
+      require(ownerOf(_memeId) == msg.sender);
+      approve(address(clockAuction), _memeId);
 
       clockAuction.createAuction(
         _memeId,

@@ -11,7 +11,7 @@ contract MemeMinting is MemeAuction{
 
   function createLegacyAuction(uint16 _generation) public onlyCOO{
     uint256 memeId = createMeme(address(this),address(0),_generation);
-    _approve(address(clockAuction), memeId);
+    approve(address(clockAuction), memeId);
 
     clockAuction.createAuction(
       memeId,
