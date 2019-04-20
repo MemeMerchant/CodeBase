@@ -25,56 +25,6 @@ contract MemeOwnership is MemeBase{
     return size > 0;
   }
 
-  /* USE ZEPPELIN CODE
-  /// @dev Returns the number of memes that an address owns
-  function balanceOf(address _owner) external view returns (uint256){
-    return ownedMeme[_owner].length;
-  }
-
-
-  function transferFrom(address _from, address _to, uint256 _tokenId) external payable{
-    require(_to != address(0));
-    require(_owns(_from, _tokenId));
-
-    _resetApprovalAndTransfer(_to, _from, _tokenId);
-  }
-*/
-
-/* I THINK WE SHOULD USE THE ZEPPELIN TRANSFER FUNCTIONS IN THEIR ENTIRITY THEY ARE LIKELY
-   MORE EFFECIENT AND SECURE THAN OURS.... AND I CAN'T HONESTLY POINT TO A DIFFERENCE.
-  function safeTransferFrom(address _from, address _to, uint256 _tokenId, bytes memory data) public payable {
-    require(_to != address(0));
-    require(_approvedFor(msg.sender, _tokenId));
-    require(_owns(_from, _tokenId));
-
-    _resetApprovalAndTransfer(_to, _from, _tokenId);
-
-    if(_isContract(_to)){
-      bytes4 tokenReceiverResponse = ERC721TokenReceiver(_to).onERC721Received.gas(50000)(
-          _from, _tokenId, data
-        );
-      require(tokenReceiverResponse == bytes4 (keccak256("onERC721Received(address,uint256,bytes)")));
-    }
-  }
-
-  function safeTransferFrom(address _from, address _to, uint256 _tokenId) external payable {
-    safeTransferFrom(_from, _to, _tokenId, "");
-  }
-
-  */
-
-/* Using Zeppelin Code
-  function approve(address _approved, uint256 _tokenId) external payable {
-    require(_owns(msg.sender, _tokenId));
-    address owner = memeIdToOwner[_tokenId];
-    require(_approved != owner);
-
-    if(getApproved(_tokenId) != address(0) || _approved != address(0)){
-      _approve(_approved, _tokenId);
-      emit Approval(msg.sender, _approved, _tokenId);
-    }
-  }
-*/
 
   function supportsInterface(bytes4 interfaceID) external view returns (bool)
     {
