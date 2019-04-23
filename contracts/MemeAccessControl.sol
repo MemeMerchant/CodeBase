@@ -66,7 +66,7 @@ contract MemeAccessControl {
 
     /// @dev Changes the address associated with the CEO.
     /// @param _newCEO is the address of the new CEO of MemeMerchant
-    function setCEO(address _newCEO) public onlyCEO() {
+    function setCEO(address _newCEO) public onlyCEO {
       // address(0) is for deploying new contracts
       require(_newCEO != address(0));
       ceoAddress = _newCEO;
@@ -74,48 +74,54 @@ contract MemeAccessControl {
 
     /// @dev Changes the address associated with the CFO
     /// @param _newCFO is the address of the new CFO of MemeMerchant
-    function setCFO(address _newCFO) public onlyCEO() {
+    function setCFO(address _newCFO) public onlyCEO {
       require(_newCFO != address(0));
       cfoAddress = _newCFO;
     }
 
     /// @dev Changes the address associated with the COO
     /// @param _newCOO is the address of the new COO of MemeMerchant
-    function setCOO(address _newCOO) public onlyCEO() {
+    function setCOO(address _newCOO) public onlyCEO {
       require(_newCOO != address(0));
       cooAddress = _newCOO;
     }
 
     /// @dev Allows the money within the contract to be withdrawn
     /// This is allocated to the role of the CFO #checksandbalances
-    function withdrawBalance() external onlyCFO() {
+    function withdrawBalance() external onlyCFO {
       msg.sender.transfer(address(this).balance);
     }
 
     /*** Define the puase functionality for our contracts ***/
+    /// @dev Modified version of OpenZeppelin's Pausable to match Maat's accessibility
+    /// Pausable is used as to enable emergency stops as well as safe upgrading of contracts
+    event Pause();
+    event Unpause();
 
     /// @dev The paused value is initialized as false when the contract is deployed
 
     modifier whenNotPaused {
-      require(!paused);
+      require(paused == false);
       _;
     }
 
     modifier whenPaused {
-      require(paused);
+      require(paused == true);
       _;
     }
 
     /// @dev Can be called by any cSuite to control damage due to a bug
-    function pause() public onlyCSuite() whenNotPaused {
+    function pause() onlyCSuite whenNotPaused public {
       paused = true;
+      emit Pause();
     }
 
     /// @dev Only the CEO can unpause once the emergency has been resolved. This
     /// is to also maintain control if the CFO or COO address have been compromised.
     /// SECURITY RISK: If CEO loses access to account and the contract gets paused
     /// then all of the tokens will be locked in the contract.
-    function unpause() public onlyCEO() whenPaused {
+    function unpause() whenPaused onlyCEO public{
       paused = false;
+      emit Unpause();
     }
 }

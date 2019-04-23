@@ -46,10 +46,4 @@ contract MemeCore is MemeMinting{
         birthTime = _meme.birthTime;
       }
 
-   function unpause() public onlyCEO{
-     require(address(clockAuction) != address(0));
-     require(newContractAddress != address(0));
-
-     super.unpause();
-   }
 }

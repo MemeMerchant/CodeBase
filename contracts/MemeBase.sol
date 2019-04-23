@@ -62,7 +62,7 @@ contract MemeBase is MemeAccessControl,ERC721Enumerable{
       /// meme array. By doing so, we also create the unique memeId.  When the
       /// _transfer function is called to assign its initial ownership, we
       /// use the memeId as the tokenId.
-      function createMeme(address _owner,address _creator,uint16 _generation) internal returns(uint){
+      function createMeme(address _owner,address _creator,uint16 _generation) public returns(uint){
         Meme memory _meme = Meme({
           creator: _creator,
           birthTime: uint64(now),
