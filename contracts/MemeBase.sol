@@ -48,11 +48,11 @@ contract MemeBase is MemeAccessControl,ERC721Enumerable{
       /// and, in terms of the event, will be the same as the indexed memeOwner
       event MemeCreated(uint memeId, address indexed memeOwner, address indexed memeCreator);
 
-      event Approval(address indexed _owner, address indexed _approved, uint256 _tokenId);
+      ///event Approval(address indexed _owner, address indexed _approved, uint256 _tokenId);
 
       /// @dev This is the event which is compliant with the ERC721 standard. Alerts
       /// the system to a transfer within the marketplace
-      event Transfer(address indexed _from, address indexed _to, uint256 _tokenId);
+      ///event Transfer(address indexed _from, address indexed _to, uint256 indexed _tokenId);
 
       /*********************************************/
       /** Add New Meme to the MemeMerchant System **/

@@ -34,11 +34,11 @@ contract("MemeMerchant", function(accounts){
 
   // bootstrap marketplace with legacy memes (Generation before user upload)
   async function bootstrapMarket(){
-    await console.log(await coreC.address);
-    let address = await coreC.address;
-    await coreC.createLegacyAuction( 1, {from: mmCOO});
+    console.log("set2")
+    let address = coreC.address
+    coreC.createLegacyAuction( 1, {from: mmCOO})
     //await coreC.createMeme(address, address, 1)
-    await console.log("set1");
+    console.log("set1");
   }
 
   before(deployContract);
@@ -56,16 +56,14 @@ contract("MemeMerchant", function(accounts){
     });
   });
 
-  before(deployContract)
-  describe('first meme-load', function(){
-    before(bootstrapMarket);
 
+  describe('first meme-load',  function(){
+    before(bootstrapMarket)
     it('should have a meme', async function(){
       let memeGeneration = await coreC.getMeme(0);
       await console.log(memeGeneration.generation.toNumber() + "the");
 
-      assert.equal(memeGeneration.creator, 0);
+      assert.equal(memeGeneration.generation.toNumber(), 1);
+      })
     })
-
-  })
 });
