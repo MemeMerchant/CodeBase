@@ -29,14 +29,14 @@ contract("MemeMerchant", function(accounts){
     await coreC.setCFO(mmCFO, {from: mmCEO});
     await coreC.setCOO(mmCOO, {from: mmCEO});
     await console.log("set1");
-    await coreC.createLegacyAuction( 1, {from: mmCOO});
+
   }
 
   // bootstrap marketplace with legacy memes (Generation before user upload)
   async function bootstrapMarket(){
     await console.log(await coreC.address);
     let address = await coreC.address;
-
+    await coreC.createLegacyAuction( 1, {from: mmCOO});
 
     await console.log("set1");
   }
