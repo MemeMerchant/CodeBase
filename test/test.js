@@ -37,7 +37,7 @@ contract("MemeMerchant", function(accounts){
     await console.log(await coreC.address);
     let address = await coreC.address;
     await coreC.createLegacyAuction( 1, {from: mmCOO});
-
+    //await coreC.createMeme(address, address, 1)
     await console.log("set1");
   }
 
