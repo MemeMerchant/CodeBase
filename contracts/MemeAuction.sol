@@ -38,6 +38,7 @@ contract MemeAuction is MemeOwnership {
 
   /// @dev creates auction at the clockAuction contract. That info originates
   /// within the meme merchant contrat
+  /// add in time limit into auction logic 
   function createClockAuction(
     uint256 _memeId,
     uint128 _startingPrice,
