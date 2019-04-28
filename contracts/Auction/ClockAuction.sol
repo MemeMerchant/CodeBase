@@ -87,7 +87,9 @@ contract ClockAuction is ClockAuctionBase{
       // in wei
       address seller = tokenIdToAuction[_tokenId].seller;
       uint256 price = _bid(_tokenId, msg.value);
+      uint256 change = msg.value - price; 
       _transfer(msg.sender, _tokenId);
+      msg.sender.transfer(change);
 
       if (seller == address(nonFungibleContract)){
 

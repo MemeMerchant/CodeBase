@@ -47,6 +47,14 @@ contract("MemeMerchant", function(accounts){
 
   }
 
+  async function getTransactionGasCost(tx) {
+    let transaction = await web3.eth.getTransactionReceipt(tx);
+    let amount = await transaction.gasUsed;
+    let trans = await web3.eth.getTransaction(tx);
+    let price = trans.gasPrice;
+    return new BigNumber(amount*price);
+  }
+
 
 const increaseTime = function(duration) {
   const id = Date.now()
@@ -156,6 +164,16 @@ const increaseTime = function(duration) {
       let owner = await meme.owner;
       assert.equal(owner, memer3);
     });
+
+    it('should confirm that funds were transfered from memer3', async function(){
+      let endingBalance = await web3.eth.getBalance(memer3);
+      endingBalance = parseInt(endingBalance);
+      let expected = await web3.utils.toWei("100", "ether");
+      let cost = await web3.utils.toWei("100", "finney");
+      expected = expected - cost;
+      assert.isBelow(endingBalance, expected);
+    });
+
     it('should prevent bidding if it has already been purchased', async function(){
       let buyer = memer1;
       let bid = web3.utils.toWei('100', "finney");
@@ -167,7 +185,6 @@ const increaseTime = function(duration) {
         }
       ));
     });
-
 
     it('should fail if insufficient funds are sent', async function(){
       let currentPrice = await auctionC.getCurrentPrice(3);
@@ -203,7 +220,27 @@ const increaseTime = function(duration) {
         }
       ));
     });
-    //it('should return change if extra funds were sent');
+
+    before( async () => {
+      await coreC.createLegacyAuction(6, {from: mmCOO});
+    });
+
+    // worried about eauctioning canceled legacy meme auction
+    it('should return change if extra funds were sent', async function(){
+      let startingBalance = await web3.eth.getBalance(memer2);
+      let auction = await auctionC.bid(6,{
+        from: memer2,
+        value: web3.utils.toWei("150", "finney"),
+      });
+      let finalBalance = await web3.eth.getBalance(memer2);
+      finalBalance = parseInt(finalBalance);
+      let expenses = await getTransactionGasCost(auction["tx"]);
+      expenses = parseInt(expenses);
+      let cost = await web3.utils.toWei("100","finney");
+      let expected = startingBalance - cost - expenses;
+      assert.isAbove(finalBalance, expected);
+
+    });
 
   });
 
@@ -292,9 +329,28 @@ const increaseTime = function(duration) {
 
   });
 
-  describe('c-suite functionality', function(){
+  describe('cash managment', function(){
     //note we have withdrawBalance and withdrawAuctionBalance
-    //it('should allow CFO to withdraw funds from cut of auctions');
+    it('should allow CEO to withdraw funds from Auction Contract to MemeContract', async function(){
+      let coreInitialBalance = await web3.eth.getBalance(coreC.address);
+      coreInitialBalance = parseInt(coreInitialBalance);
+      await coreC.withdrawAuctionBalance({from:mmCEO});
+      let coreFinalBalance = await web3.eth.getBalance(coreC.address);
+      coreFinalBalance = parseInt(coreFinalBalance);
+      assert.isAbove(coreFinalBalance, coreInitialBalance);
+    });
+
+    it('should let CFO withdraw funds from MemeContract', async function(){
+      let cfoInitialBalance = await web3.eth.getBalance(mmCFO);
+      cfoInitialBalance = parseInt(cfoInitialBalance);
+      await coreC.withdrawBalance({from:mmCFO});
+      let cfoFinalBalance = await web3.eth.getBalance(mmCFO);
+      cfoFinalBalance = parseInt(cfoFinalBalance);
+      assert.isAbove(cfoFinalBalance, cfoInitialBalance);
+    })
+  });
+
+  describe('c-suite functionality', function(){
     afterEach(unpause);
     it('should allow the CFO to pause contracts', async function(){
       await coreC.pause({from: mmCFO});
