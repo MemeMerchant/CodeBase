@@ -5,13 +5,12 @@ import "./MemeAuction.sol";
 /// @dev Functions releated to creating new memes
 contract MemeMinting is MemeAuction{
 
-  uint128 legacyMemeStartingPrice = 10 finney;
+  uint128 legacyMemeStartingPrice = 100 finney;
   uint64 legacyMemeAuctionTime = 1 days;
   uint256 legacyCreatedCount;
 
   function createLegacyAuction(uint16 _generation) public onlyCOO{
     uint256 memeId = createMeme(address(this),address(0),_generation);
-    //uint256 memeId = 1;
     approve(address(clockAuction), memeId);
 
     clockAuction.createAuction(

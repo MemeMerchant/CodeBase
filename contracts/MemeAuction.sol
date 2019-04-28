@@ -38,7 +38,7 @@ contract MemeAuction is MemeOwnership {
 
   /// @dev creates auction at the clockAuction contract. That info originates
   /// within the meme merchant contrat
-  /// add in time limit into auction logic 
+  /// add in time limit into auction logic
   function createClockAuction(
     uint256 _memeId,
     uint128 _startingPrice,
@@ -49,6 +49,7 @@ contract MemeAuction is MemeOwnership {
     whenNotPaused()
   {
       require(ownerOf(_memeId) == msg.sender);
+      require(_duration <= 2 weeks);
       approve(address(clockAuction), _memeId);
 
       clockAuction.createAuction(
@@ -58,6 +59,7 @@ contract MemeAuction is MemeOwnership {
         _duration,
         msg.sender
         );
+
   }
 
   /// @dev Allows us to get our cut of the auction transactions from the
@@ -66,6 +68,20 @@ contract MemeAuction is MemeOwnership {
     clockAuction.withdrawBalance();
   }
 
+  function cancelAuctionFromMeme(uint256 tokenId) public {
+    bool cSuite = false;
+    if(msg.sender == ceoAddress ||
+       msg.sender == cooAddress ||
+       msg.sender == cfoAddress){
+         cSuite = true;
+       }
+
+    address caller = msg.sender;
+    clockAuction.cancelAuction(tokenId,cSuite,caller);
+
+    //address(clockAuction).delegatecall(abi.encode(bytes4(keccak256("cancelAuction(uint256, bool)")),tokenId, cSuite));
+
+  }
 
 
 }

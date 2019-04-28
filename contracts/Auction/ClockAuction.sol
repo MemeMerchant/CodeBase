@@ -9,6 +9,8 @@ contract ClockAuction is ClockAuctionBase{
   /// @param _nftaddress -address of a deployed contract implementing
   /// the Nonfungible Interface
 
+
+
   bool public isClockAuction = true;
   address public owner;
   uint256 public legacyMemeCount;
@@ -63,7 +65,9 @@ contract ClockAuction is ClockAuctionBase{
     canBeStoredwith64Bits(_duration)
     {
       require(msg.sender == address(nonFungibleContract));
-      _escrow(msg.sender, _tokenId);
+      // user seller for escrow to transfer to this escrow contract
+      // can't use msg.sender because that will equal the nonFungibleContract always
+      _escrow(_seller, _tokenId);
       Auction memory auction = Auction(
         _seller,
         uint128(_startingPrice),
@@ -93,11 +97,12 @@ contract ClockAuction is ClockAuctionBase{
     }
 
 
-    function cancelAuction(uint256 _tokenId) public {
+    function cancelAuction(uint256 _tokenId, bool isCSuite, address caller) public {
       Auction storage auction = tokenIdToAuction[_tokenId];
       require(_isOnAuction(auction));
+      require(msg.sender == address(nonFungibleContract));
       address seller = auction.seller;
-      require(msg.sender == seller);
+      require(caller == seller || isCSuite);
       _cancelAuction(_tokenId, seller);
     }
 
@@ -124,7 +129,7 @@ contract ClockAuction is ClockAuctionBase{
       uint256 startedAt
     ){
       Auction storage auction = tokenIdToAuction[_tokenId];
-      require(_isOnAuction(auction));
+      //require(_isOnAuction(auction));
       return (
         auction.seller,
         auction.startingPrice,
@@ -142,6 +147,16 @@ contract ClockAuction is ClockAuctionBase{
       Auction storage auction = tokenIdToAuction[_tokenId];
       require(_isOnAuction(auction));
       return _currentPrice(auction);
+    }
+
+    function getOnAuction(uint256 _tokenId)
+    public
+    view
+    returns (bool)
+    {
+      Auction storage auction = tokenIdToAuction[_tokenId];
+      bool onAuction = _isOnAuction(auction);
+      return(onAuction);
     }
 
     function averageLegacyMemePrice() public view returns (uint256) {

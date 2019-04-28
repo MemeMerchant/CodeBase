@@ -146,13 +146,17 @@ contract ClockAuctionBase {
   /// @dev Removes an auction from the list of open auctions.
   /// @param _tokenId - ID of NFT on auction.
   function _removeAuction(uint256 _tokenId) internal{
-    delete tokenIdToAuction[_tokenId];
+
+     delete tokenIdToAuction[_tokenId];
   }
 
 
   /// @dev Returns true if the NFT is on auction.
   function _isOnAuction(Auction storage _auction) internal view returns (bool){
-    return (_auction.startTime >0);
+    bool notBought = _auction.startTime > 0;
+    uint64 end = _auction.startTime + _auction.duration;
+    bool expired = (end < uint64(now));
+    return ( notBought && !expired);
   }
 
   /// @dev Returns the current price of the NFT on auction.
