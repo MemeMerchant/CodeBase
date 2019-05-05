@@ -1,0 +1,42 @@
+.bigMeme{
+  border-radius: 35px;
+  overflow: hidden;
+  object-fit:cover;
+}
+
+.bigMeme img{
+  width: 35vw;
+  height: 35vw;
+}
+
+
+.MarketBar{
+  width: 100%;
+  display: inline-block;
+  background-color: #CACACA;
+  height: 11vh;
+  margin-top: 4vh;
+  margin-bottom: 3vh;
+  line-height: 11vh;
+  padding-left:3.5vw;
+}
+
+
+.marketPlace button{
+  font-size: 1.8vw;
+  margin: 0;
+  padding:0;
+  width: 10vw;
+}
+
+.marketPlace button:hover{
+  font-size: 2.0vw;
+  background-color: #CACACA;
+}
+
+.marketPlace button:focus{
+  border: none;
+  outline: none;
+  font-size: 1.8vw;
+  text-decoration: underline;
+}

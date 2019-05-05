@@ -46,4 +46,29 @@ contract MemeCore is MemeMinting{
         birthTime = _meme.birthTime;
       }
 
+  /******************************************
+  ****    Front End Getter Functions ********
+  ******************************************/
+
+  function getTotalMemes() public returns (uint){
+    uint result = memes.length;
+    return(result);
+  }
+
+  function isLegacyMeme(uint memeId) public returns (bool){
+    address owner;
+    address creator;
+    uint16 generation;
+    uint64 birthTime;
+    (owner,creator,generation,birthTime) = getMeme(memeId);
+    bool res;
+    generation == 0 ? res = true : res = false;
+    return(res);
+  }
+
+  // already have "onAuction" in the auction gontract, just need to deploys
+  /* function OnAuctionMemes() public returns(uint[]){
+    //return array of meme's currently on auction
+  } */
+
 }

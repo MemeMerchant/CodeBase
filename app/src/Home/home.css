@@ -1,0 +1,151 @@
+.userCount{
+  margin: 2vw;
+  float:left;
+  margin-left: 8.5vw;
+  margin-top: 0vw;
+  font-size:12px;
+  margin-bottom: 20vh;
+  width: 90%;
+}
+
+.info-Columns{
+  display: inline-block;
+  margin: auto;
+  width: 100%;
+  padding-left: 7vw;
+  padding-top: 20vh;
+  background-color: #C4C4C4;
+  margin-bottom: 15vh;
+  padding-bottom: 20vh;
+}
+
+.first-Column{
+  display:inline-block;
+  text-align:center;
+  float: left;
+  width: 20vw;
+  margin:auto;
+  padding-right: 6.2vw;
+  border-right: 1px solid #fff;
+  color: #fff;
+}
+
+.first-icon{
+  display:inline-block;
+  width: 100%;
+  margin-bottom: 5vh;
+  /*will have source for icon*/
+  background-color: #fff;
+  border-radius: 50px;
+  height: 7vw;
+  width: 7vw;
+  line-height: 7vw;
+  color: #000;
+  margin-top: 4vh;
+  font-size: 40px;
+}
+
+.second-Column{
+  display:inline-block;
+  text-align:center;
+  float: left;
+  width: 20vw;
+  margin:auto;
+  padding-right: 6.2vw;
+  padding-left: 6.2vw;
+  border-right: 1px solid #fff;
+  color: #fff;
+}
+
+.second-icon{
+  display:inline-block;
+  width: 100%;
+  margin-bottom: 5vh;
+  /*will have source for icon*/
+  background-color: #fff;
+  border-radius: 50px;
+  height: 7vw;
+  width: 7vw;
+  line-height: 7vw;
+  color: #000;
+  margin-top: 4vh;
+  font-size: 40px;
+}
+
+.third-Column{
+  display:inline-block;
+  text-align:center;
+  float: left;
+  width: 20vw;
+  margin:auto;
+  padding-left: 6.2vw;
+  color: #fff;
+}
+
+.third-icon{
+  display:inline-block;
+  width: 100%;
+  margin-bottom: 5vh;
+  /*will have source for icon*/
+  background-color: #fff;
+  border-radius: 50px;
+  height: 7vw;
+  width: 7vw;
+  line-height: 7vw;
+  color: #000;
+  margin-top: 4vh;
+  font-size: 40px;
+}
+
+.info{
+  display:inline-block;
+  margin: auto;
+  width: 100%;
+  margin-top: 5vh;
+  margin-bottom: 10vh;
+  font-size: 15px;
+}
+
+.letsMemeSection{
+  display: inline-block;
+  text-align: center;
+  width: 100%;
+  margin: auto;
+  margin-top: 15vh;
+  margin-bottom: 30vh;
+}
+
+.starting-text{
+  margin-bottom: 5vh;
+  font-size: 2vw;
+}
+
+button{
+  width: 18vw;
+  border-radius: 13px;
+  height: 8vh;
+  font-size: 2.2vw;
+  background-color:#CACACA;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  transition-duration: .6s ;
+  -webkit-transition-duration: ..5s;
+  transition: background-color .5s, font-size .5s;
+}
+
+button:hover{
+  background-color:#606060;
+  font-size: 2.3vw;
+  transition: background-color .5s, font-size .5s;
+
+}
+
+.Home button:focus{
+  outline: none;
+  border: none;
+}
+
+button:active{
+  font-size:2.2vw;
+}

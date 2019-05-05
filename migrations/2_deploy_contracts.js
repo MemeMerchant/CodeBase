@@ -6,5 +6,4 @@ module.exports = function(deployer) {
   deployer.deploy(MemeMerchant).then(function() {
     return deployer.deploy(ClockAuction, MemeMerchant.address, 250);
   });
-
 };

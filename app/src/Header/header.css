@@ -1,0 +1,44 @@
+.left-half{
+  float: left;
+  width: 39%;
+  margin:5vh;
+  margin-left: 7vw;
+  margin-top: 10vh;
+}
+
+.right-half{
+  float:right;
+  width: 39%;
+  margin: 5vh;
+  margin-right: 7vw;
+  margin-top: 10vh;
+  text-align:right;
+}
+
+nav{
+  display:inline-block;
+  width: 100%;
+}
+
+
+.link{
+  display: inline-block;
+  margin: 1vw;
+  height: 5vw;
+  text-decoration: none;
+  color: #000;
+}
+
+.logo{
+  background-image: url('../memes/meme-1.jpg');
+  background-repeat: no-repeat;
+  background-size:contain;
+  height: 5vw;
+  width: 5vw;
+}
+
+.navState{
+  width: 90vw;
+  float:left;
+  margin: 10vw;
+}
