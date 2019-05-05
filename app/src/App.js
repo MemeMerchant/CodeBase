@@ -22,37 +22,28 @@ class App extends Component {
   componentWillMount() {
       getMemeContract().then((memecontract) =>{
           this.setState({
-            memeCore: memecontract;
+            memeCore: memecontract
           })
           this.instantiateContract()
         })
         .catch(() => {
           console.log('Error finding MemeCore')
         })
-      )
     }
 
     instantiateContract = () =>{
       let web3 = this.state.web3;
-      let owner = web3.
+      this.state.web3.eth.getAccounts((error, accounts) => {
+        this.setState({
+          ownerAddress: accounts[0],
+        })
+      })
+
 
        this.state.memeCore.unpause({
-         from:
+         from: this.state.ownerAddress
        })
      }
-   };
-  }
-
-
-  this.fetchMemeContract().then((memeCore) => {
-     memeCore({from: web3.currentProvider.addre})
-     var arr = []
-     for(var i = 0; i < arrayLength; i++){
-       arr.push(i);
-     }
-     setMemeArray(arr);
-    }
-  );
 
 
   render() {
