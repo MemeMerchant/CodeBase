@@ -1,19 +1,20 @@
-import React, { useState, useEffect } from "react";
-import MemeCore from "../contracts/MemeCore.json";
+import React, {useState, useEffect } from "react";
+import ClockAuction from "../contracts/ClockAuction.json";
 import getWeb3 from "../utils/getWeb3";
-import Web3 from "web3";
 
 
-async function getMemeContract(){
+async function getClockAuction(){
+
   async function fetchWeb3(){
     try {
       // Get network provider and web3 instance.
-      const web3Inst = await new Web3("ws://localhost:8545");
+      const web3Inst = await getWeb3();
+
       // Get the contract instance.
       const networkId = await web3Inst.eth.net.getId();
-      const deployedNetwork = await MemeCore.networks[networkId];
+      const deployedNetwork = await ClockAuction.networks[networkId];
       const instance = await new web3Inst.eth.Contract(
-        MemeCore.abi,
+        ClockAuction.abi,
         deployedNetwork && deployedNetwork.address,
       );
       return(instance);
@@ -26,9 +27,9 @@ async function getMemeContract(){
     }
   }
 
-  const memer = await fetchWeb3();
-  return(memer);
+  const clockAuction = await fetchWeb3();
+  return(clockAuction);
 }
 
 
-export default getMemeContract;
+export default getClockAuction;

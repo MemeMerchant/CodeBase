@@ -8,3 +8,29 @@
   max-width: 720px;
   margin: 4rem auto auto;
 }
+
+.togglePauseBtn{
+  text-align: center;
+  display: inline-block;
+  margin: 5vw;
+  width: 15vw;
+  font-size: 1.0vw;
+}
+
+.togglePauseBtn:hover{
+  font-size: 1.1vw;
+}
+
+.togglePauseBtn:focus{
+  border: none;
+  outline: none;
+}
+
+.centerLoading{
+  text-align:center;
+  margin: 5vw;
+}
+
+.OwnerBtn{
+  text-align:center;
+}

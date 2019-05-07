@@ -8,6 +8,7 @@
   margin: 0.5vw;
   opacity: 0;
   -webkit-animation: fadeIn 2s forwards;
+  display: inline-block;
 }
 
 /*fix this at some point to not warp images*/

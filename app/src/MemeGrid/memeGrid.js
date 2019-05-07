@@ -28,42 +28,14 @@ function MemeGrid(){
 function GridMemeRow(starter){
   // puts the meme's into rows of 4 columns
 
-  const [i, setI] = useState(1);
-  const [j, setJ] = useState(1);
-  const [k, setK] = useState(1);
-  const [l, setL] = useState(1);
-
-
-  // setTimeout(() => {
-  //   setI(i+1);
-  // }, 30000)
-  //
-  //
-  // setTimeout(() => {
-  //   setJ(j+1);
-  // }, 10000)
-  //
-  // setTimeout(() => {
-  //   setK(k+1);
-  // }, 5000)
-  //
-  //
-  // setTimeout(() => {
-  //   setL(l+1);
-  // }, 15000)
-
-
   const row = [GridMeme(3 * starter % 36),
                GridMeme(5 * starter % 36),
                GridMeme(7 * starter % 36),
                GridMeme(8 * starter % 36)];
 
   const list = row.map((component,index) =>
-
       component
-
 )
-
   return(
     <div className="gridRow">
       {list}
@@ -78,8 +50,6 @@ function GridMeme(memeId){
   setTimeout(()=>{
     setId(id*id % 35 +1)
   }, (2300 * memeId) %100000)
-
-
 
   return(
     <div className="gridMeme">

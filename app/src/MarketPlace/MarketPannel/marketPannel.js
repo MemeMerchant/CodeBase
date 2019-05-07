@@ -2,64 +2,78 @@ import React, {useState, useEffect} from "react";
 import "./marketPannel.css";
 import getMemeContract from "../../MemeContract/memeContract.js";
 
-import Web3 from "web3";
-
-function MarketPannel(props){
+ function MarketPannel(props){
   // use searchType prop to filter meme's
   // searchtype == all ? display all memes in ID array :
   // searchType == ForSale ? display only forSale Meme's :
   // searchType == Legacy ? display only legacy meme's :
-  const [memeArray, setMemeArray] = useState([]);
-  const [web3,setWeb3] = useState(new Web3("ws://localhost:8545"));
-  const [memeContract,setMemeContract]= useState();
+  const [arrayLength, setMemeArrayLength] = useState(0);
+  const [memeArray, setMemeArray] = useState();
+  const [memeContract,setMemeContract]= useState(0);
 
 
-  async function fetchMemeContract() {
-    try {
-      let memeCore = await getMemeContract();
-      await setMemeContract(memeCore);
-      return(memeCore)
-    } catch(error){
-      alert('failed to find MemeCore Contract');
-      console.error(error);
+  if(memeContract == 0){
+    getMemeContract().then((result) => {
+      setMemeContract(result)
+    });
+  }
+
+  useEffect(() => {
+    if(memeContract != 0 ){
+      console.log(memeContract);
+      setArrayLength();
     }
+  },[memeContract,props.searchType])
+
+  useEffect(() =>{
+    if(arrayLength != 0){
+      renderArray()
+      console.log("hey there");
+    }
+  },[arrayLength, props.searchType])
+
+  async function setArrayLength(){
+    const arrayLength = await memeContract.methods.getTotalMemes().call();
+    setMemeArrayLength(arrayLength);
   }
 
-  // const arrayLength = memeContract.getTotalMemes() -1;
 
-  if(props.searchType === "All"){
-    fetchMemeContract().then((memeCore) => {
-       const arrayLength = memeCore.methods.getTotalMemes();
-       var arr = []
-       for(var i = 0; i < arrayLength; i++){
-         arr.push(i);
-       }
-       setMemeArray(arr);
+    async function renderArray(){
+      if(props.searchType === "All"){
+           console.log(arrayLength);
+           var arr = []
+           for(var i = 0; i < arrayLength; i++){
+            await arr.push(i);
+            console.log(i);
+           }
+           console.log(arr);
+           await setMemeArray(arr);
+           console.log(memeArray);
+          }
+
+      if(props.searchType === "ForSale"){
+          console.log("FORSALE")
+          var arr =[]
+          setMemeArray(arr);
+
       }
-    );
-  }
 
-  if(props.searchType === "ForSale"){
-    fetchMemeContract().then( (memeCore) => {
-      // use onAuction() getter from ClockAuction contract
-      // need to write the auction getter contract component
-    })
-  }
-
-  if(props.searchType === "Legacy"){
-    fetchMemeContract().then(  (memeCore) => {
-      const arrayLength =  memeCore.methods.getTotalMemes();
-      var arr = [1];
-      for(var i =0; i<arrayLength; i++){
-        let res =  memeCore.methods.isLegacyMeme(i);
-        if(res){arr.push(i);}
+      if(props.searchType === "Legacy"){
+          var arr = [];
+          for(var i =0; i<arrayLength; i++){
+            let res =  memeContract.methods.isLegacyMeme(i);
+            if(res){arr.push(i);}
+          }
+          setMemeArray(arr);
+          console.log(arr);
+          // know length, loop through array of meme's within lenght
+          // in loop check if generation == o and add to new array
       }
-       setMemeArray(arr);
-      console.log(arr);
-      // know length, loop through array of meme's within lenght
-      // in loop check if generation == o and add to new array
-    })
-  }
+    }
+
+    console.log(memeArray)
+
+
 
   return(
     <div>
@@ -78,20 +92,38 @@ function MarketPannel(props){
             </div>
             :
             <div className="LoadingMemeGrids">
-              {"MarketPannelArray"}
+              <MarketPannelRow array={memeArray}/>
             </div>
-          }
-        </div>
-      }
-  </div>
+           }
+         </div>
+       }
+   </div>
   )
 }
 
+async function fetchMemeContract(){
+  console.log('here')
+  let result = await getMemeContract();
+  return(result);
+}
+
+
 
 function MarketPannelRow(props){
-  // create's rows with 4 columns meme's that fall under search category
-  // # of rows depends on the number of meme's in array
-  // gotta get computer sciency here
+  let array = props.array;
+
+  let retArray = [];
+
+  for(var i =0; i < array.length; i++){
+    retArray.push(
+      <div className="marketMeme">
+        <button>
+          <img src={require('../../memes/meme-' + i + '.jpg')}/>
+        </button>
+      </div>
+    )
+  }
+  return(retArray)
 
 }
 

@@ -2,7 +2,7 @@ import React, { useState} from "react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import Home from "../Home/home.js";
 import MarketPlace from "../MarketPlace/marketPlace.js";
-import "./header.css";
+import "./body.css";
 
 //All of these components will eventually be replaced with their actual component pages
 // and they will be imported to be called by the router
@@ -24,7 +24,7 @@ function About() {
   )};
 
 
-function Header() {
+function Body() {
   // need marketplace button, memefolio button and about button on the left
   // the logo will be on the right. Logo will also act as home button
   // will want to have some form of active button managment (could just use css)
@@ -53,4 +53,4 @@ function Header() {
   )
 };
 
-export default Header;
+export default Body;

@@ -4,3 +4,32 @@
   font-size: 30px;
   margin-bottom: 20vh;
 }
+
+.marketMeme{
+  height: 20vw;
+  width: 20vw !important;
+  float: left;
+  border-radius: 15px;
+  overflow: hidden;
+  margin: 3vw;
+  margin-top: 8vh;
+  margin-bottom: 5vh;
+  opacity: 0;
+  -webkit-animation: fadeIn 2s forwards;
+  display: inline-block;
+}
+
+.marketMeme button{
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.marketMeme:first-child {
+  margin-left: 4vw;
+}
+
+/*fix this at some point to not warp images*/
+.marketMeme img{
+  width: 100%;
+  height: 100%;
+}
