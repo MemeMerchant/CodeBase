@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from "react";
 import "./marketPannel.css";
 import getMemeContract from "../../MemeContract/memeContract.js";
+import getClockAuction from "../../ClockAuction/clockAuction.js"
 
  function MarketPannel(props){
   // use searchType prop to filter meme's
@@ -10,20 +11,36 @@ import getMemeContract from "../../MemeContract/memeContract.js";
   const [arrayLength, setMemeArrayLength] = useState(0);
   const [memeArray, setMemeArray] = useState();
   const [memeContract,setMemeContract]= useState(0);
+  const [auctionContract, setAuctionContract] = useState(0);
 
 
   if(memeContract == 0){
     getMemeContract().then((result) => {
+        console.log("hererere")
       setMemeContract(result)
     });
   }
 
+  if(auctionContract ==0){
+    getClockAuction().then((results)=>{
+      console.log("si this happenign")
+      setAuctionContract(results)
+    });
+  }
+
   useEffect(() => {
-    if(memeContract != 0 ){
+    if(memeContract != 0 && auctionContract!=0){
       console.log(memeContract);
+      //setArrayLength();
+    }
+  },[memeContract, auctionContract,props.searchType])
+
+  useEffect(() =>{
+    if(auctionContract!=0){
+      console.log(auctionContract);
       setArrayLength();
     }
-  },[memeContract,props.searchType])
+  },[auctionContract,props.searchType])
 
   useEffect(() =>{
     if(arrayLength != 0){
@@ -54,14 +71,19 @@ import getMemeContract from "../../MemeContract/memeContract.js";
       if(props.searchType === "ForSale"){
           console.log("FORSALE")
           var arr =[]
+          console.log(auctionContract);
+          for(var i=0; i<arrayLength; i++){
+           let res = await auctionContract.methods.getOnAuction(i).call();
+           if(res){arr.push(i)};
+          }
           setMemeArray(arr);
-
+          console.log(arr);
       }
 
       if(props.searchType === "Legacy"){
           var arr = [];
           for(var i =0; i<arrayLength; i++){
-            let res =  memeContract.methods.isLegacyMeme(i);
+            let res =  await memeContract.methods.isLegacyMeme(i).call();
             if(res){arr.push(i);}
           }
           setMemeArray(arr);
@@ -101,11 +123,9 @@ import getMemeContract from "../../MemeContract/memeContract.js";
   )
 }
 
-async function fetchMemeContract(){
-  console.log('here')
-  let result = await getMemeContract();
-  return(result);
-}
+
+
+
 
 
 
