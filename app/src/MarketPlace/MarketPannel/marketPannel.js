@@ -126,6 +126,8 @@ import Web3 from "web3";
     let memeId = memePopUp;
     console.log(memeId + "This is in pop up");
     let memeName;
+    let currentAccount = web3.currentProvider.selectedAddress;
+    console.log(currentAccount);
     if(memeId == 0){
       console.log("aliens")
       memeName = "Aliens";

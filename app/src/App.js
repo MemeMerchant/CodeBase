@@ -23,6 +23,7 @@ class App extends Component {
   }
 
   componentWillMount() {
+      window.ethereum.enable();
       getMemeContract().then((memecontract) =>{
         this.setState({
           memeCore: memecontract
@@ -30,11 +31,14 @@ class App extends Component {
         console.log("this happened")
       }).then(() =>{
         this.state.memeCore.methods.paused().call().then((result) => {
+          console.log("paused result")
           this.setState({
             paused: result,
           })
         }).then(() =>{
-          this.state.memeCore.methods.getMeme(0).call().then((result) => {
+            console.log("what's happening")
+            //this.state.memeCore.methods.getMeme(0).call().then((result) => {
+            let result = null;
             let res;
             result === null ? res = false : res = true;
             this.setState({
@@ -42,7 +46,7 @@ class App extends Component {
             })
           })
         })
-      })
+  //    })
 
 
 
