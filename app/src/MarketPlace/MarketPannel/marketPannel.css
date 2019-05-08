@@ -6,12 +6,12 @@
 }
 
 .marketMeme{
-  height: 20vw;
-  width: 20vw !important;
+  height: 18vw;
+  width: 18vw !important;
   float: left;
   border-radius: 15px;
   overflow: hidden;
-  margin: 3vw;
+  margin: 2.5vw;
   margin-top: 8vh;
   margin-bottom: 5vh;
   opacity: 0;
@@ -25,11 +25,65 @@
 }
 
 .marketMeme:first-child {
-  margin-left: 4vw;
+  margin-left: 3vw;
+}
+
+.marketMeme:nth-child(4n){
+  margin-right: 0;
+}
+
+.marketMeme:nth-child(4n+1){
+  margin-left: 3vw;
 }
 
 /*fix this at some point to not warp images*/
 .marketMeme img{
   width: 100%;
   height: 100%;
+}
+
+.popup{
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  background-color: rgba(0,0,0,0.5);
+}
+
+.popup_inner{
+  position: absolute;
+  left: 10%;
+  right: 10%;
+  top: 15%;
+  bottom: 15%;
+  margin: auto;
+  margin-bottom:0 !important;
+  background: #fff;
+}
+
+.popup_inner div{
+  margin-bottom: 1vh !important;
+}
+
+.popup_inner div .gridMeme{
+  margin-right: 15vw;
+  width: 25vw;
+  height: 25vw;
+  margin-top: 14vh;
+}
+
+.popup_inner button{
+  width: 15vw !important;
+}
+
+.popup_inner button:hover{
+  font-size: 1.9vw !important;
+}
+
+.popup_inner button:focus{
+  text-decoration: none !important;
 }
