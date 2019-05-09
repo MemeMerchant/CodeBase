@@ -71,22 +71,17 @@ class App extends Component {
   }
 
   bootstrapHandle = async (event) =>{
-    console.log("bootstrap");
     let contract = await this.state.memeCore;
     let arr = [];
     for(let i =0; i<10; i++){
       arr.push(i);
     };
     let account = await this.state.cooAddress;
+    console.log(account);
     await contract.methods.createLegacyAuction(0).send({from: account});
     let result = await contract.methods.getMeme(0).call();
     await console.log(result);
-    // for(const item of arr){
-    //   await contract.methods.createLegacyAuction(0).send({from: account});
-    //   await console.log("Deploy LegacyAuction: " + item);
-    // }
-
-     await this.setState({
+    await this.setState({
       bootstrapped: true
     })
   }
@@ -104,7 +99,7 @@ class App extends Component {
        current = await false;
      }
      if(!this.state.paused){
-       await contract.methods.pause().send({from:this.state.ownerAddress})
+       await contract.methods.pause().send({from:this.state.ceoAddress})
        current = await true;
      }
      this.setState({paused: current});

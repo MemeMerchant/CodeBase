@@ -19,14 +19,14 @@ import Web3 from "web3";
 
 
   if(memeContract == 0){
-    getMemeContract().then((result) => {
+    getMemeContract.then((result) => {
         console.log("hererere")
       setMemeContract(result)
     });
   }
 
   if(auctionContract ==0){
-    getClockAuction().then((results)=>{
+    getClockAuction.then((results)=>{
       console.log("si this happenign")
       setAuctionContract(results)
     });
