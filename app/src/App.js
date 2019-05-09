@@ -93,11 +93,14 @@ class App extends Component {
 
    pauseToggle = async (event) => {
      const contract =  await this.state.memeCore;
-     console.log(contract);
-     const account = await this.state.ownerAddress;
+     console.log("We are here" + contract )
+     const account = await this.state.ceoAddress;
+     console.log("Now we are here " + account);
      let current;
+     await contract.methods.unpause().send({from: account})
      if (this.state.paused){
-       await contract.methods.unpause().send({from: account})
+        console.log(contract);
+
        current = await false;
      }
      if(!this.state.paused){
@@ -114,7 +117,7 @@ class App extends Component {
      const clockAddress = await clockAuction.options.address;
      console.log(clockAddress)
 
-     await contractMeme.methods.setClockAuctionAddress(clockAddress).send({from: this.state.ownerAddress})
+     await contractMeme.methods.setClockAuctionAddress(clockAddress).send({from: this.state.ceoAddress})
 
    }
 
