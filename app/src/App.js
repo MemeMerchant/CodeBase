@@ -3,7 +3,7 @@ import Body from "./Body/body.js";
 import Web3 from 'web3';
 import getClockAuction from "./ClockAuction/clockAuction.js";
 import getMemeContract from "./MemeContract/memeContract.js";
-
+import getWeb3 from "./utils/getWeb3.js";
 
 import "./App.css";
 
@@ -12,9 +12,9 @@ class App extends Component {
   constructor(props){
     super(props)
     this.state = {
-      ownerAddress: 0,
+      ceoAddress: 0,
       cooAddress: 0,
-      web3: new Web3("ws://localhost:8545"),
+      web3: null,
       memeCore: 0,
       paused: false,
       clockAuction: 0,
@@ -22,61 +22,52 @@ class App extends Component {
     }
   }
 
-  componentWillMount() {
-      window.ethereum.enable();
-      getMemeContract().then((memecontract) =>{
+  componentDidMount = async() => {
+      try{
+        const web3 = await getWeb3;
+        const accounts = await web3.eth.getAccounts();
+        console.log(accounts);
+        const memeContract = await getMemeContract;
+        const paused = await memeContract.methods.paused().call();
+        const clockAuction = await getClockAuction
+        let bootstrapped, res;
+          // bootstrapped = await memeContract.methods.getMeme(0).call();
+        bootstrapped === null ? res = false : res = true;
         this.setState({
-          memeCore: memecontract
-        })
-        console.log("this happened")
-      }).then(() =>{
-        this.state.memeCore.methods.paused().call().then((result) => {
-          console.log("paused result")
-          this.setState({
-            paused: result,
-          })
-        }).then(() =>{
-            console.log("what's happening")
-            //this.state.memeCore.methods.getMeme(0).call().then((result) => {
-            let result = null;
-            let res;
-            result === null ? res = false : res = true;
-            this.setState({
-              bootstrapped: res,
-            })
-          })
-        })
-  //    })
+          memeCore: memeContract,
+          paused: paused,
+          bootstrapped: bootstrapped,
+          clockAuction: clockAuction,
+          web3: web3,
+          ceoAddress: accounts[0],
+          cooAddress: accounts[1],
+        });
 
+        console.log("Instantiated: " );
+        console.log("  web3: " + this.state.web3)
+        console.log("  paused: " + this.state.paused)
+        console.log("  ceoAddress: " + this.state.ceoAddress)
+        console.log("  cooAddress: " + this.state.cooAddress)
+        console.log("  ClockAuction: " + this.state.clockAuction)
+        console.log("  memeCore: " + this.state.memeCore)
 
-
-      getClockAuction().then((clockAuctionContract) =>{
-        this.setState({
-          clockAuction: clockAuctionContract,
-        })
-        console.log('made it here')
-      })
-    .catch(() => {
-      console.log('Error finding deployed contracts')
-    })
-      //getClockAuction
-      //then attach clockAuction to memeCore
-  }
-
+      } catch (error){
+        alert(
+          'failed to load web3, accounts, contracts or bootstrap'
+        );
+        console.error(error);
+      }
+    }
 
 
   setCoo = async (event) => {
     let web3 = await this.state.web3;
-    let accounts = await this.state.web3.eth.getAccounts()
     let contract = await this.state.memeCore;
-    console.log(contract);
+    let theCoo = document.querySelector(".SetCooHandler").value;
+    await this.state.memeCore.methods.setCOO(theCoo).send({from: this.state.ceoAddress});
     await this.setState({
-      ownerAddress: accounts[0],
-      cooAddress: accounts[1],
+      cooAddress: theCoo,
     })
-    await this.state.memeCore.methods.setCOO(this.state.cooAddress).send({from: this.state.ownerAddress});
-    let coo = await contract.methods.cooAddress().call({from: accounts[0]});
-    await console.log(accounts[1] +"      " + coo );
   }
 
   bootstrapHandle = async (event) =>{
@@ -135,11 +126,19 @@ class App extends Component {
      } else {
        return(
            <div className="OwnerBtn">
+              <div className="setCooBtn">
+                <div className="field">
+                  <input className="SetCooHandler" type="text"/>
+                  <label htmlFor="register">
+                    <span> COO Address </span>
+                    </label>
+               </div>
+               <button onClick={this.setCoo.bind(this)}>
+                  Add CooAddress
+               </button>
+              </div>
               <button className="togglePauseBtn" onClick={this.pauseToggle.bind(this)}>
                  {this.state.paused ? "Unpause Contract" : "Pause Contract"}
-              </button>
-              <button className="togglePauseBtn" onClick={this.setCoo.bind(this)}>
-                Set CooAddress
               </button>
               <button className="togglePauseBtn" onClick={this.connectAuction.bind(this)}>
                  Connect Clock Auction

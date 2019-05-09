@@ -34,3 +34,87 @@
 .OwnerBtn{
   text-align:center;
 }
+
+.RemoveAdmins{
+  margin-top: 40px;
+}
+
+/* *****
+/* Input Design
+/* ***** */
+.setCooBtn{
+  width: 14vw;
+  margin-top: 20vh;
+  margin-right: 1px;
+  text-align: center;
+  margin-left: 33vw;
+}
+
+.field {
+  width: 20vw;
+  height: 70px;
+  position: relative;
+  margin-bottom: 20px;
+  align-content: center;
+}
+
+
+.field input {
+  width: 100%;
+  border-radius: 6px;
+  height: 70px;
+  border: 0;
+  padding: 10px;
+  padding: 10px 0 0 16px;
+  font-size: 0;
+  background: #00A2FF;
+  transition: background 0.3s ease;
+  color: #ffffff;
+}
+.field input:focus {
+  background: #00A2FF;
+  font-size: 20px;
+  outline: none;
+}
+.field input:focus::selection {
+  background: rgba(188, 232, 255, 0.5);
+}
+.field input.active {
+  background: #065CB7;
+  font-size: 23px;
+}
+.field input {
+  position: absolute;
+  height: 70px;
+}
+
+.field input:focus + label {
+  font-size: 19px;
+  transform: translate(16px, 11px);
+  color: rgba(255, 255, 255, 0.7);
+}
+.field label {
+  position: absolute;
+  color: white;
+  transform: translate(16px, 20px);
+  transition: transform 0.3s ease, font-size 0.3s ease, color 0.3s 0.1s ease;
+  font-size: 23px;
+  width: 100%;
+  text-align: left;
+}
+.field label.active {
+  font-size: 19px;
+  transform: translate(16px, 11px);
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.field input:focus + label + button {
+  opacity: 1;
+}
+
+.setCooBtn button{
+  font-size: 3.4vh;
+  width: 14vw;
+  margin-left: 10vw;
+
+}

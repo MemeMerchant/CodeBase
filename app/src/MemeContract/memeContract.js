@@ -3,32 +3,17 @@ import MemeCore from "../contracts/MemeCore.json";
 import getWeb3 from "../utils/getWeb3";
 import Web3 from "web3";
 
-
-async function getMemeContract(){
-  async function fetchWeb3(){
-    try {
-      // Get network provider and web3 instance.
-      const web3Inst = await new Web3("ws://localhost:8545");
-      // Get the contract instance.
-      const networkId = await web3Inst.eth.net.getId();
-      const deployedNetwork = await MemeCore.networks[networkId];
-      const instance = await new web3Inst.eth.Contract(
-        MemeCore.abi,
-        deployedNetwork && deployedNetwork.address,
-      );
-      return(instance);
-    } catch (error) {
-      // Catch any errors for any of the above operations.
-      alert(
-        `Failed to load web3, accounts, or contract. Check console for details.`,
-      );
-      console.error(error);
-    }
-  }
-
-  const memer = await fetchWeb3();
-  return(memer);
-}
-
+const getMemeContract =
+  new Promise((resolve,reject) => {
+       getWeb3.then( async (web3) => {
+        const networkId =  await web3.eth.net.getId();
+        const deployedNetwork =  await MemeCore.networks[networkId];
+        const instance = await  new web3.eth.Contract(
+          MemeCore.abi,
+          deployedNetwork && deployedNetwork.address,
+        );
+      resolve(instance);
+    })
+  });
 
 export default getMemeContract;
