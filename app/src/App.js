@@ -144,6 +144,9 @@ class App extends Component {
               <button className="togglePauseBtn" onClick={this.bootstrapHandle.bind(this)}>
                  Bootstrap Market
               </button>
+              <button className="togglePauseBtn" onClick={() => this.setState({bootstrapped: true})}>
+                 Skip
+              </button>
            </div>
          );
      }
