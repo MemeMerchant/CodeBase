@@ -8,7 +8,7 @@ const getMemeContract =
        getWeb3.then( async (web3) => {
         const networkId =  await web3.eth.net.getId();
         const deployedNetwork =  await MemeCore.networks[networkId];
-        const instance = await  new web3.eth.Contract(
+        const instance = await new web3.eth.Contract(
           MemeCore.abi,
           deployedNetwork && deployedNetwork.address,
         );
