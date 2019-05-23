@@ -20,28 +20,23 @@ import Web3 from "web3";
 
   if(memeContract == 0){
     getMemeContract.then((result) => {
-        console.log("hererere")
       setMemeContract(result)
     });
   }
 
   if(auctionContract ==0){
     getClockAuction.then((results)=>{
-      console.log("si this happenign")
       setAuctionContract(results)
     });
   }
 
   useEffect(() => {
     if(memeContract != 0 && auctionContract!=0){
-      console.log(memeContract);
-      //setArrayLength();
     }
   },[memeContract, auctionContract,props.searchType])
 
   useEffect(() =>{
     if(auctionContract!=0){
-      console.log(auctionContract);
       setArrayLength();
     }
   },[auctionContract,props.searchType])
@@ -49,7 +44,6 @@ import Web3 from "web3";
   useEffect(() =>{
     if(arrayLength != 0){
       renderArray()
-      console.log("hey there");
     }
   },[arrayLength, props.searchType])
 
@@ -61,15 +55,11 @@ import Web3 from "web3";
 
   async function renderArray(){
     if(props.searchType === "All"){
-         console.log(arrayLength);
          var arr = []
          for(var i = 0; i < arrayLength; i++){
           await arr.push(i);
-          console.log(i);
          }
-         console.log(arr);
          await setMemeArray(arr);
-         console.log(memeArray);
         }
 
     if(props.searchType === "ForSale"){
@@ -97,8 +87,6 @@ import Web3 from "web3";
     }
   }
 
-  console.log(memeArray)
-  console.log(memePopUp);
 
   function handleLoadGrids() {
     let total = arrayLength;
@@ -106,7 +94,10 @@ import Web3 from "web3";
     numRows = Math.ceil(numRows);
     let arr =[];
     for(let i = 0; i < numRows; i++){
-        arr.push(<MarketPannelRow array={memeArray} Toggle={togglePopUp}/>)
+        arr.push(<MarketPannelRow
+          array={memeArray}
+          Toggle={togglePopUp}
+          getFeatures={getFeatures}/>)
     }
     return(arr);
   }
@@ -160,8 +151,48 @@ import Web3 from "web3";
     }else{
       return(null)
     }
-
   }
+
+ async function getFeatures(x){
+   let auctioned = await auctionContract.methods.getOnAuction(x).call();
+   console.log(auctioned);
+   if(auctioned == true){
+     let result = await auctionContract.methods.getCurrentPrice(x).call();
+     result = web3.utils.fromWei(result, "ether");
+     result = parseFloat(result).toFixed(5);
+     return(result)
+   }else if(auctioned == false){
+     console.log("suh")
+     return("NA");
+   }
+
+   // If i were to make this an async function, the function would return a
+   // promise, in which case we could always use a then value...
+   // Meme's weren't on auction, so the method call was throwing an error, and
+   // you can't call .then on an error, only a promise. See if, you can return
+   // the null value for the meme if it isn't on auction so no price display's
+   // or an "NA" value displays to indicate not on auction.
+   // may have to force a promise, because a not-on-auction meme may auto-return
+   // instead of a promise which will screw with how the calling function handles
+   // the call as sometimes it would be a promise and sometimes it returns a value
+
+   // auctionContract.methods.getCurrentPrice(x).call().catch(err => {
+   //   console.log("an error occured during method call");
+   // })
+   // return(1);
+   /*.then((res) => {
+     console.log("get features running")
+     return(
+     <div className="MemePrice">
+         {"Current Price: " + res }
+     </div>
+   )
+   }
+ ).catch(err =>  {
+   console.log("an error occured during the call ");
+ });*/
+ }
+
 
   return(
     <div>
@@ -200,24 +231,58 @@ import Web3 from "web3";
 
 
 function MarketPannelRow(props){
+  // make array a state variable so that it rerenders this component once it updates
+  // use effect to get features?
+  const [subArray, setSubArray] = useState([]);
   let array = props.array;
   let toggleButton = props.Toggle;
-
-
+  let getFeatures = props.getFeatures;
   let retArray = [];
   for(var i = 0; i < array.length; i++){
     let id = array[i];
-    retArray.push(
-      <div className="marketMeme">
-      <button onClick={() => toggleButton(id)}>
-        <img src={require('../../memes/meme-' + id + '.jpg')}/>
-      </button>
-      </div>
-    )
+    getFeatures(id).then((result) =>{
+      retArray.push(
+        <div className="marketMeme">
+          <button onClick={() => toggleButton(id)}>
+            <img src={require('../../memes/meme-' + id + '.jpg')}/>
+          </button>
+          <div className="MemeDetails1">
+            {"Price: " + result}
+          </div>
+          <div className="MemeDetails2">
+            {"Price: " + result}
+          </div>
+        </div>
+        //<MemeObject memeId = id/>
+      )
+      setSubArray(retArray);
+    })
   }
-  return(retArray)
+  return(subArray)
 }
 
+// function MemeObject(props){
+//   let id = props.memeId;
+//   let fetures;
+//   getFeatures(id).then((result) => {
+//     price = result;
+//
+//   })
+//
+//   return(
+//     <div className="marketMeme">
+//       <button onClick={() => toggleButton(id)}>
+//         <img src={require('../../memes/meme-' + id + '.jpg')}/>
+//       </button>
+//       <div className="MemeDetails1">
+//         {"Price: " + result}
+//       </div>
+//       <div className="MemeDetails2">
+//         {"Price: " + result}
+//       </div>
+//     </div>
+// //   )
+// }
 
 
 

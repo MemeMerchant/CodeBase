@@ -26,7 +26,6 @@ class App extends Component {
       try{
         const web3 = await getWeb3;
         const accounts = await web3.eth.getAccounts();
-        console.log(accounts);
         const memeContract = await getMemeContract;
         const paused = await memeContract.methods.paused().call();
         const clockAuction = await getClockAuction
@@ -118,7 +117,6 @@ class App extends Component {
 
    renderPageHandler = () =>{
      let boot = this.state.bootstrapped;
-     console.log(boot);
      if(boot){
         return(<Body/>)
      } else {

@@ -6,11 +6,7 @@
 }
 
 .marketMeme{
-  height: 18vw;
-  width: 18vw !important;
   float: left;
-  border-radius: 15px;
-  overflow: hidden;
   margin: 2.5vw;
   margin-top: 8vh;
   margin-bottom: 5vh;
@@ -20,8 +16,11 @@
 }
 
 .marketMeme button{
-  width: 100% !important;
-  height: 100% !important;
+  display:block;
+  height: 18vw;
+  width: 18vw !important;
+  border-radius: 25px;
+  overflow: hidden;
 }
 
 .marketMeme:first-child {
@@ -86,4 +85,14 @@
 
 .popup_inner button:focus{
   text-decoration: none !important;
+}
+
+.MemeDetails1{
+  margin-left: 1vw;
+  line-height: 5vh !important;
+}
+
+.MemeDetails2{
+  margin-left: 1vw;
+  line-height: 5vh !important;
 }
